@@ -35,40 +35,49 @@ final class ModelIntrospectionTest extends TestCase
     #[Test]
     public function it_fully_describes_a_model(): void
     {
-        $manifest = $this->build();
+        $models = $this->asArray($this->build()['models']);
 
-        $this->assertArrayHasKey('SampleModel', $manifest['models']);
-        $model = $manifest['models']['SampleModel'];
+        $this->assertArrayHasKey('SampleModel', $models);
+        $model = $this->asArray($models['SampleModel']);
 
         $this->assertSame(SampleModel::class, $model['class']);
         $this->assertSame('samples', $model['table']);
-        $this->assertArrayHasKey('id', $model['attributes']);
-        $this->assertArrayHasKey('email', $model['attributes']);
 
-        $this->assertArrayHasKey('children', $model['relationships']);
-        $this->assertSame('HasMany', $model['relationships']['children']['type']);
-        $this->assertSame(SampleModel::class, $model['relationships']['children']['related']);
+        $attributes = $this->asArray($model['attributes']);
+        $this->assertArrayHasKey('id', $attributes);
+        $this->assertArrayHasKey('email', $attributes);
 
-        $this->assertArrayHasKey('display_name', $model['accessors']);
-        $this->assertSame('attribute', $model['accessors']['display_name']['style']);
-        $this->assertTrue($model['accessors']['display_name']['get']);
-        $this->assertFalse($model['accessors']['display_name']['set']);
+        $relationships = $this->asArray($model['relationships']);
+        $this->assertArrayHasKey('children', $relationships);
+        $children = $this->asArray($relationships['children']);
+        $this->assertSame('HasMany', $children['type']);
+        $this->assertSame(SampleModel::class, $children['related']);
 
-        $this->assertContains(SampleTrait::class, $model['traits']);
-        $this->assertContains(SampleObserver::class, $model['observers']);
+        $accessors = $this->asArray($model['accessors']);
+        $this->assertArrayHasKey('display_name', $accessors);
+        $displayName = $this->asArray($accessors['display_name']);
+        $this->assertSame('attribute', $displayName['style']);
+        $this->assertTrue($displayName['get']);
+        $this->assertFalse($displayName['set']);
+
+        $this->assertContains(SampleTrait::class, $this->asArray($model['traits']));
+        $this->assertContains(SampleObserver::class, $this->asArray($model['observers']));
     }
 
     #[Test]
     public function it_describes_form_request_contracts(): void
     {
-        $manifest = $this->build();
+        $requests = $this->asArray($this->build()['requests']);
 
-        $this->assertArrayHasKey(SampleRequest::class, $manifest['requests']);
-        $request = $manifest['requests'][SampleRequest::class];
+        $this->assertArrayHasKey(SampleRequest::class, $requests);
+        $request = $this->asArray($requests[SampleRequest::class]);
 
-        $this->assertSame(['required', 'string', 'max:255'], $request['rules']['name']);
-        $this->assertContains('required', $request['rules']['email']);
-        $this->assertSame('That email is taken.', $request['messages']['email.unique']);
+        $rules = $this->asArray($request['rules']);
+        $this->assertSame(['required', 'string', 'max:255'], $rules['name']);
+        $this->assertContains('required', $this->asArray($rules['email']));
+
+        $messages = $this->asArray($request['messages']);
+        $this->assertSame('That email is taken.', $messages['email.unique']);
     }
 
     /**

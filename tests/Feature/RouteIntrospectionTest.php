@@ -34,8 +34,9 @@ final class RouteIntrospectionTest extends TestCase
         $this->assertSame(['user' => '[0-9]+'], $entry['wheres']);
 
         // Group middleware and the route's own middleware are both gathered.
-        $this->assertContains('auth', $entry['middleware']);
-        $this->assertContains('throttle:60,1', $entry['middleware']);
+        $middleware = $this->asArray($entry['middleware']);
+        $this->assertContains('auth', $middleware);
+        $this->assertContains('throttle:60,1', $middleware);
     }
 
     #[Test]

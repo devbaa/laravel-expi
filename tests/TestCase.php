@@ -20,4 +20,17 @@ abstract class TestCase extends Orchestra
             LaravelExpiServiceProvider::class,
         ];
     }
+
+    /**
+     * Assert that a manifest value is an array and return it narrowed, so
+     * nested manifest assertions stay type-safe instead of indexing `mixed`.
+     *
+     * @return array<array-key, mixed>
+     */
+    protected function asArray(mixed $value): array
+    {
+        $this->assertIsArray($value);
+
+        return $value;
+    }
 }

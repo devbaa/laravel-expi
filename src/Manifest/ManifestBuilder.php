@@ -31,12 +31,14 @@ final class ManifestBuilder
      */
     public function build(ManifestOptions $options): array
     {
+        $appName = config('app.name', 'Laravel');
+
         $manifest = [
             'laravel'     => $this->app->version(),
             'php'         => PHP_VERSION,
             'generatedAt' => now()->toIso8601String(),
             'app'         => [
-                'name' => (string) config('app.name', 'Laravel'),
+                'name' => is_string($appName) ? $appName : 'Laravel',
             ],
         ];
 

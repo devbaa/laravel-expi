@@ -32,7 +32,11 @@ final class SampleModel extends Model
     protected function displayName(): Attribute
     {
         return Attribute::make(
-            get: static fn (mixed $value, array $attributes): string => (string) ($attributes['name'] ?? ''),
+            get: static function (mixed $value, array $attributes): string {
+                $name = $attributes['name'] ?? '';
+
+                return is_string($name) ? $name : '';
+            },
         );
     }
 }

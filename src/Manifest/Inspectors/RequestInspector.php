@@ -97,7 +97,11 @@ final class RequestInspector
         $normalized = [];
 
         foreach ($rules as $field => $ruleSet) {
-            $items = is_array($ruleSet) ? $ruleSet : explode('|', (string) $ruleSet);
+            $items = match (true) {
+                is_array($ruleSet)  => $ruleSet,
+                is_string($ruleSet) => explode('|', $ruleSet),
+                default             => [$ruleSet],
+            };
 
             $normalized[(string) $field] = array_values(array_filter(
                 array_map($this->ruleToString(...), $items),
