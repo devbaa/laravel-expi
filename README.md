@@ -1,5 +1,7 @@
 # laravel-expi
 
+> **expi** — short for *explorer*. The package explores your running Laravel app and maps out what it finds.
+
 > [!NOTE]
 > **AI-generated project.** This package — its code, tests and documentation — was written by an AI assistant (Claude). It is statically analysed (PHPStan level 10 + strict rules) and covered by an automated test suite, but please review it before relying on it in production.
 
