@@ -56,10 +56,7 @@ final class RouteIntrospectionTest extends TestCase
      */
     private function routeNamed(string $name): ?array
     {
-        /** @var Router $router */
-        $router = $this->app->make(Router::class);
-
-        $routes = (new RouteInspector($router))->inspect();
+        $routes = (new RouteInspector(app(Router::class)))->inspect();
 
         foreach ($routes as $route) {
             if (($route['name'] ?? null) === $name) {

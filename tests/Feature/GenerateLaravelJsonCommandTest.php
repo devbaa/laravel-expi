@@ -36,7 +36,7 @@ final class GenerateLaravelJsonCommandTest extends TestCase
     #[Test]
     public function it_writes_the_manifest_to_a_file(): void
     {
-        $path = $this->app->basePath('build/laravel.json');
+        $path = base_path('build/laravel.json');
         File::delete($path);
 
         $this->assertSame(0, Artisan::call('expi:json', ['--output' => 'build/laravel.json']));
