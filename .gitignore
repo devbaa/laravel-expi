@@ -2,6 +2,7 @@
 composer.lock
 .phpunit.result.cache
 .phpunit.cache/
+phpstan.neon
 /build/
 .idea/
 .vscode/

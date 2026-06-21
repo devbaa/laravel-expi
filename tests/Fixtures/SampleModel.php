@@ -26,6 +26,9 @@ final class SampleModel extends Model
         return $this->hasMany(self::class, 'parent_id');
     }
 
+    /**
+     * @return Attribute<string, never>
+     */
     protected function displayName(): Attribute
     {
         return Attribute::make(

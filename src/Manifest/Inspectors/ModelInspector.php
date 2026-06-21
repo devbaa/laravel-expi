@@ -271,11 +271,13 @@ final class ModelInspector
                 foreach ($method->getParameters() as $parameter) {
                     $type = $parameter->getType();
 
-                    if ($type instanceof ReflectionNamedType
-                        && ! $type->isBuiltin()
-                        && is_subclass_of($type->getName(), Model::class)) {
-                        /** @var class-string $modelClass */
-                        $modelClass = $type->getName();
+                    if (! $type instanceof ReflectionNamedType || $type->isBuiltin()) {
+                        continue;
+                    }
+
+                    $modelClass = $type->getName();
+
+                    if (is_subclass_of($modelClass, Model::class)) {
                         $map[$modelClass][] = $observer;
 
                         continue 3;

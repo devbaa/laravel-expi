@@ -30,7 +30,7 @@ final class RouteInspector
         $routes = [];
 
         /** @var Route $route */
-        foreach ($this->router->getRoutes() as $route) {
+        foreach ($this->router->getRoutes()->getRoutes() as $route) {
             $action = $route->getActionName();
 
             $entry = [
@@ -102,10 +102,9 @@ final class RouteInspector
                 continue;
             }
 
-            if (is_subclass_of($type->getName(), FormRequest::class)) {
-                /** @var class-string $requestClass */
-                $requestClass = $type->getName();
+            $requestClass = $type->getName();
 
+            if (is_subclass_of($requestClass, FormRequest::class)) {
                 return $requestClass;
             }
         }

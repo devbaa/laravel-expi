@@ -1,0 +1,13 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 6
+
+    paths:
+        - src
+        - tests
+
+    # Reflection-based introspection deliberately probes dynamic shapes, so a
+    # few Laravel-internal nuances are not worth fighting the analyser over.
+    treatPhpDocTypesAsCertain: false

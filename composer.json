@@ -30,6 +30,7 @@
         "symfony/finder": "^7.0 || ^8.0"
     },
     "require-dev": {
+        "larastan/larastan": "^3.0",
         "orchestra/testbench": "^9.0 || ^10.0 || ^11.0",
         "phpunit/phpunit": "^10.5 || ^11.0 || ^12.0"
     },
@@ -44,7 +45,12 @@
         }
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "phpunit",
+        "analyse": "phpstan analyse",
+        "check": [
+            "@analyse",
+            "@test"
+        ]
     },
     "config": {
         "sort-packages": true
