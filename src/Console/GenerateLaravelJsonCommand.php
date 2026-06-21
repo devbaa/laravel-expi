@@ -51,9 +51,9 @@ final class GenerateLaravelJsonCommand extends Command
             only: $only,
             except: $except,
             paths: [
-                'models'    => (string) $this->option('models-path'),
-                'requests'  => (string) $this->option('requests-path'),
-                'observers' => (string) $this->option('observers-path'),
+                'models'    => $this->stringOption('models-path'),
+                'requests'  => $this->stringOption('requests-path'),
+                'observers' => $this->stringOption('observers-path'),
             ],
         );
 
@@ -77,6 +77,18 @@ final class GenerateLaravelJsonCommand extends Command
     }
 
     /**
+     * Read an option that is declared as a string flag, falling back to the
+     * given default when it is absent. Console options are loosely typed
+     * (array|bool|string|null), so narrow to a string explicitly.
+     */
+    private function stringOption(string $key, string $default = ''): string
+    {
+        $value = $this->option($key);
+
+        return is_string($value) ? $value : $default;
+    }
+
+    /**
      * @param array<string, mixed> $manifest
      *
      * @throws JsonException
@@ -94,7 +106,7 @@ final class GenerateLaravelJsonCommand extends Command
 
     private function write(string $json): int
     {
-        $target = (string) ($this->option('output') ?: self::DEFAULT_OUTPUT);
+        $target = $this->stringOption('output') ?: self::DEFAULT_OUTPUT;
 
         $path = $this->isAbsolute($target) ? $target : base_path($target);
 

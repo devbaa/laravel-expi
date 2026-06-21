@@ -155,7 +155,7 @@ artifact you choose to expose. Install it as a `--dev` dependency.
 ```bash
 composer install
 composer test      # PHPUnit suite
-composer analyse   # Larastan / PHPStan (level 6)
+composer analyse   # Larastan / PHPStan (level 7)
 composer check     # both
 ```
 
