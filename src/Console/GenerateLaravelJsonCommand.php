@@ -10,7 +10,7 @@ use Illuminate\Console\Command;
 use JsonException;
 
 /**
- * `php artisan laravel:json`
+ * `php artisan expi:json`
  *
  * Generates a `laravel.json` manifest of the application — models (schema,
  * relationships, accessors, traits, interfaces, observers), Form Request
@@ -24,7 +24,7 @@ final class GenerateLaravelJsonCommand extends Command
     /** @var list<string> */
     private const SECTIONS = ['models', 'requests', 'routes'];
 
-    protected $signature = 'laravel:json
+    protected $signature = 'expi:json
         {--o|output= : Destination file path (default: docs/laravel.json). Relative paths resolve from the app base}
         {--stdout : Print the manifest to the terminal instead of writing a file}
         {--only= : Comma-separated sections to include (models,requests,routes)}

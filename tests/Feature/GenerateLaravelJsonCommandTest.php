@@ -14,14 +14,14 @@ final class GenerateLaravelJsonCommandTest extends TestCase
     #[Test]
     public function it_prints_a_valid_manifest_to_stdout(): void
     {
-        $this->artisan('laravel:json', ['--stdout' => true])
+        $this->artisan('expi:json', ['--stdout' => true])
             ->assertSuccessful();
     }
 
     #[Test]
     public function stdout_output_is_valid_json_with_the_expected_shape(): void
     {
-        Artisan::call('laravel:json', ['--stdout' => true, '--only' => 'routes']);
+        Artisan::call('expi:json', ['--stdout' => true, '--only' => 'routes']);
 
         $output = Artisan::output();
         $decoded = json_decode(trim($output), true, flags: JSON_THROW_ON_ERROR);
@@ -40,7 +40,7 @@ final class GenerateLaravelJsonCommandTest extends TestCase
         $path = $this->app->basePath('build/laravel.json');
         File::delete($path);
 
-        $this->artisan('laravel:json', ['--output' => 'build/laravel.json'])
+        $this->artisan('expi:json', ['--output' => 'build/laravel.json'])
             ->assertSuccessful();
 
         $this->assertFileExists($path);
@@ -52,7 +52,7 @@ final class GenerateLaravelJsonCommandTest extends TestCase
     #[Test]
     public function it_rejects_using_only_and_except_together(): void
     {
-        $this->artisan('laravel:json', ['--stdout' => true, '--only' => 'routes', '--except' => 'models'])
+        $this->artisan('expi:json', ['--stdout' => true, '--only' => 'routes', '--except' => 'models'])
             ->assertExitCode(2);
     }
 }

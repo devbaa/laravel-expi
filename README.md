@@ -27,26 +27,26 @@ That's it. The service provider is auto-discovered — **no config to publish, n
 
 ```bash
 # Write docs/laravel.json (default)
-php artisan laravel:json
+php artisan expi:json
 
 # Write somewhere specific
-php artisan laravel:json --output=public/schema/laravel.json
+php artisan expi:json --output=public/schema/laravel.json
 
 # Print to the terminal instead of writing a file
-php artisan laravel:json --stdout
+php artisan expi:json --stdout
 
 # Only some sections (models | requests | routes)
-php artisan laravel:json --only=models,routes
-php artisan laravel:json --except=routes
+php artisan expi:json --only=models,routes
+php artisan expi:json --except=routes
 
 # Point at non-default directories
-php artisan laravel:json \
+php artisan expi:json \
     --models-path=app/Models \
     --requests-path=app/Http/Requests \
     --observers-path=app/Observers
 
 # Compact output
-php artisan laravel:json --minify
+php artisan expi:json --minify
 ```
 
 ### Options
