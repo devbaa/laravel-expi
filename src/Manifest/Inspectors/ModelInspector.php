@@ -111,10 +111,20 @@ final class ModelInspector
         $attributes = [];
 
         foreach ($columns as $column) {
-            $attributes[$column['name']] = [
-                'type'     => $column['type_name'] ?? $column['type'],
-                'nullable' => (bool) $column['nullable'],
-                'default'  => $column['default'],
+            if (! is_array($column)) {
+                continue;
+            }
+
+            $name = $column['name'] ?? null;
+
+            if (! is_string($name)) {
+                continue;
+            }
+
+            $attributes[$name] = [
+                'type'     => $column['type_name'] ?? $column['type'] ?? null,
+                'nullable' => (bool) ($column['nullable'] ?? false),
+                'default'  => $column['default'] ?? null,
                 'auto'     => (bool) ($column['auto_increment'] ?? false),
             ];
         }
@@ -243,8 +253,10 @@ final class ModelInspector
             $arguments = $attribute->getArguments();
             $declared = $arguments[0] ?? $arguments['classes'] ?? [];
 
-            foreach ((array) $declared as $observer) {
-                $observers[] = $observer;
+            foreach (is_array($declared) ? $declared : [$declared] as $observer) {
+                if (is_string($observer) && class_exists($observer)) {
+                    $observers[] = $observer;
+                }
             }
         }
 

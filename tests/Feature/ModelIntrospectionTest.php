@@ -11,6 +11,7 @@ use Boralp\LaravelExpi\Tests\Fixtures\SampleObserver;
 use Boralp\LaravelExpi\Tests\Fixtures\SampleRequest;
 use Boralp\LaravelExpi\Tests\Fixtures\SampleTrait;
 use Boralp\LaravelExpi\Tests\TestCase;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -23,7 +24,7 @@ final class ModelIntrospectionTest extends TestCase
     {
         parent::setUp();
 
-        Schema::create('samples', static function ($table): void {
+        Schema::create('samples', static function (Blueprint $table): void {
             $table->id();
             $table->string('name');
             $table->string('email')->nullable();

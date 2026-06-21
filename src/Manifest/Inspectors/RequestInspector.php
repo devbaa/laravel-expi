@@ -88,7 +88,7 @@ final class RequestInspector
     }
 
     /**
-     * @param array<string, mixed> $rules
+     * @param array<array-key, mixed> $rules
      *
      * @return array<string, list<string>>
      */
