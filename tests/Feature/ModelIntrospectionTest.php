@@ -38,31 +38,31 @@ final class ModelIntrospectionTest extends TestCase
     {
         $models = $this->asArray($this->build()['models']);
 
-        $this->assertArrayHasKey('SampleModel', $models);
+        self::assertArrayHasKey('SampleModel', $models);
         $model = $this->asArray($models['SampleModel']);
 
-        $this->assertSame(SampleModel::class, $model['class']);
-        $this->assertSame('samples', $model['table']);
+        self::assertSame(SampleModel::class, $model['class']);
+        self::assertSame('samples', $model['table']);
 
         $attributes = $this->asArray($model['attributes']);
-        $this->assertArrayHasKey('id', $attributes);
-        $this->assertArrayHasKey('email', $attributes);
+        self::assertArrayHasKey('id', $attributes);
+        self::assertArrayHasKey('email', $attributes);
 
         $relationships = $this->asArray($model['relationships']);
-        $this->assertArrayHasKey('children', $relationships);
+        self::assertArrayHasKey('children', $relationships);
         $children = $this->asArray($relationships['children']);
-        $this->assertSame('HasMany', $children['type']);
-        $this->assertSame(SampleModel::class, $children['related']);
+        self::assertSame('HasMany', $children['type']);
+        self::assertSame(SampleModel::class, $children['related']);
 
         $accessors = $this->asArray($model['accessors']);
-        $this->assertArrayHasKey('display_name', $accessors);
+        self::assertArrayHasKey('display_name', $accessors);
         $displayName = $this->asArray($accessors['display_name']);
-        $this->assertSame('attribute', $displayName['style']);
-        $this->assertTrue($displayName['get']);
-        $this->assertFalse($displayName['set']);
+        self::assertSame('attribute', $displayName['style']);
+        self::assertTrue($displayName['get']);
+        self::assertFalse($displayName['set']);
 
-        $this->assertContains(SampleTrait::class, $this->asArray($model['traits']));
-        $this->assertContains(SampleObserver::class, $this->asArray($model['observers']));
+        self::assertContains(SampleTrait::class, $this->asArray($model['traits']));
+        self::assertContains(SampleObserver::class, $this->asArray($model['observers']));
     }
 
     #[Test]
@@ -70,15 +70,15 @@ final class ModelIntrospectionTest extends TestCase
     {
         $requests = $this->asArray($this->build()['requests']);
 
-        $this->assertArrayHasKey(SampleRequest::class, $requests);
+        self::assertArrayHasKey(SampleRequest::class, $requests);
         $request = $this->asArray($requests[SampleRequest::class]);
 
         $rules = $this->asArray($request['rules']);
-        $this->assertSame(['required', 'string', 'max:255'], $rules['name']);
-        $this->assertContains('required', $this->asArray($rules['email']));
+        self::assertSame(['required', 'string', 'max:255'], $rules['name']);
+        self::assertContains('required', $this->asArray($rules['email']));
 
         $messages = $this->asArray($request['messages']);
-        $this->assertSame('That email is taken.', $messages['email.unique']);
+        self::assertSame('That email is taken.', $messages['email.unique']);
     }
 
     /**

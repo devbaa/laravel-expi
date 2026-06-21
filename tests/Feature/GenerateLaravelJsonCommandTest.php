@@ -14,7 +14,7 @@ final class GenerateLaravelJsonCommandTest extends TestCase
     #[Test]
     public function it_prints_a_valid_manifest_to_stdout(): void
     {
-        $this->assertSame(0, Artisan::call('expi:json', ['--stdout' => true]));
+        self::assertSame(0, Artisan::call('expi:json', ['--stdout' => true]));
     }
 
     #[Test]
@@ -25,12 +25,12 @@ final class GenerateLaravelJsonCommandTest extends TestCase
         $output = Artisan::output();
         $decoded = json_decode(trim($output), true, flags: JSON_THROW_ON_ERROR);
 
-        $this->assertIsArray($decoded);
-        $this->assertArrayHasKey('laravel', $decoded);
-        $this->assertArrayHasKey('php', $decoded);
-        $this->assertArrayHasKey('routes', $decoded);
-        $this->assertArrayNotHasKey('models', $decoded);
-        $this->assertArrayNotHasKey('requests', $decoded);
+        self::assertIsArray($decoded);
+        self::assertArrayHasKey('laravel', $decoded);
+        self::assertArrayHasKey('php', $decoded);
+        self::assertArrayHasKey('routes', $decoded);
+        self::assertArrayNotHasKey('models', $decoded);
+        self::assertArrayNotHasKey('requests', $decoded);
     }
 
     #[Test]
@@ -39,10 +39,10 @@ final class GenerateLaravelJsonCommandTest extends TestCase
         $path = base_path('build/laravel.json');
         File::delete($path);
 
-        $this->assertSame(0, Artisan::call('expi:json', ['--output' => 'build/laravel.json']));
+        self::assertSame(0, Artisan::call('expi:json', ['--output' => 'build/laravel.json']));
 
-        $this->assertFileExists($path);
-        $this->assertIsArray(json_decode((string) File::get($path), true, flags: JSON_THROW_ON_ERROR));
+        self::assertFileExists($path);
+        self::assertIsArray(json_decode((string) File::get($path), true, flags: JSON_THROW_ON_ERROR));
 
         File::delete($path);
     }
@@ -50,6 +50,6 @@ final class GenerateLaravelJsonCommandTest extends TestCase
     #[Test]
     public function it_rejects_using_only_and_except_together(): void
     {
-        $this->assertSame(2, Artisan::call('expi:json', ['--stdout' => true, '--only' => 'routes', '--except' => 'models']));
+        self::assertSame(2, Artisan::call('expi:json', ['--stdout' => true, '--only' => 'routes', '--except' => 'models']));
     }
 }

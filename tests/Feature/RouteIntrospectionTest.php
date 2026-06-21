@@ -27,16 +27,16 @@ final class RouteIntrospectionTest extends TestCase
 
         $entry = $this->routeNamed('users.show');
 
-        $this->assertNotNull($entry, 'Expected the grouped route to be present in the manifest.');
-        $this->assertSame('api/v1/users/{user}', $entry['uri']);
-        $this->assertSame('/api/v1', $entry['prefix']);
-        $this->assertSame('admin.example.com', $entry['domain']);
-        $this->assertSame(['user' => '[0-9]+'], $entry['wheres']);
+        self::assertNotNull($entry, 'Expected the grouped route to be present in the manifest.');
+        self::assertSame('api/v1/users/{user}', $entry['uri']);
+        self::assertSame('/api/v1', $entry['prefix']);
+        self::assertSame('admin.example.com', $entry['domain']);
+        self::assertSame(['user' => '[0-9]+'], $entry['wheres']);
 
         // Group middleware and the route's own middleware are both gathered.
         $middleware = $this->asArray($entry['middleware']);
-        $this->assertContains('auth', $middleware);
-        $this->assertContains('throttle:60,1', $middleware);
+        self::assertContains('auth', $middleware);
+        self::assertContains('throttle:60,1', $middleware);
     }
 
     #[Test]
@@ -46,10 +46,10 @@ final class RouteIntrospectionTest extends TestCase
 
         $entry = $this->routeNamed('ping');
 
-        $this->assertNotNull($entry);
-        $this->assertArrayNotHasKey('prefix', $entry);
-        $this->assertArrayNotHasKey('domain', $entry);
-        $this->assertArrayNotHasKey('wheres', $entry);
+        self::assertNotNull($entry);
+        self::assertArrayNotHasKey('prefix', $entry);
+        self::assertArrayNotHasKey('domain', $entry);
+        self::assertArrayNotHasKey('wheres', $entry);
     }
 
     /**

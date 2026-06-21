@@ -29,7 +29,7 @@ abstract class TestCase extends Orchestra
      */
     protected function asArray(mixed $value): array
     {
-        $this->assertIsArray($value);
+        self::assertIsArray($value);
 
         return $value;
     }

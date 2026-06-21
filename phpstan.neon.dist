@@ -1,5 +1,6 @@
 includes:
     - vendor/larastan/larastan/extension.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
 
 parameters:
     level: 10
@@ -11,3 +12,8 @@ parameters:
     # Reflection-based introspection deliberately probes dynamic shapes, so a
     # few Laravel-internal nuances are not worth fighting the analyser over.
     treatPhpDocTypesAsCertain: false
+
+    # Larastan / strict-rules opt-ins on top of level 10.
+    checkUninitializedProperties: true
+    checkBenevolentUnionTypes: true
+    reportAnyTypeWideningInVarTag: true

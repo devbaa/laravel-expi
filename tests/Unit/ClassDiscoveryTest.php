@@ -17,13 +17,13 @@ final class ClassDiscoveryTest extends TestCase
     {
         $discovered = (new ClassDiscovery())->in(__DIR__.'/../Fixtures');
 
-        $this->assertContains(SampleModel::class, $discovered);
-        $this->assertContains(AbstractSample::class, $discovered);
+        self::assertContains(SampleModel::class, $discovered);
+        self::assertContains(AbstractSample::class, $discovered);
     }
 
     #[Test]
     public function it_returns_an_empty_list_for_a_missing_directory(): void
     {
-        $this->assertSame([], (new ClassDiscovery())->in(__DIR__.'/does-not-exist'));
+        self::assertSame([], (new ClassDiscovery())->in(__DIR__.'/does-not-exist'));
     }
 }

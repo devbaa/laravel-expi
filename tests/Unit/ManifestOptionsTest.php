@@ -15,9 +15,9 @@ final class ManifestOptionsTest extends TestCase
     {
         $options = ManifestOptions::make();
 
-        $this->assertTrue($options->includeModels);
-        $this->assertTrue($options->includeRequests);
-        $this->assertTrue($options->includeRoutes);
+        self::assertTrue($options->includeModels);
+        self::assertTrue($options->includeRequests);
+        self::assertTrue($options->includeRoutes);
     }
 
     #[Test]
@@ -25,9 +25,9 @@ final class ManifestOptionsTest extends TestCase
     {
         $options = ManifestOptions::make(only: ['routes']);
 
-        $this->assertFalse($options->includeModels);
-        $this->assertFalse($options->includeRequests);
-        $this->assertTrue($options->includeRoutes);
+        self::assertFalse($options->includeModels);
+        self::assertFalse($options->includeRequests);
+        self::assertTrue($options->includeRoutes);
     }
 
     #[Test]
@@ -35,9 +35,9 @@ final class ManifestOptionsTest extends TestCase
     {
         $options = ManifestOptions::make(except: ['models']);
 
-        $this->assertFalse($options->includeModels);
-        $this->assertTrue($options->includeRequests);
-        $this->assertTrue($options->includeRoutes);
+        self::assertFalse($options->includeModels);
+        self::assertTrue($options->includeRequests);
+        self::assertTrue($options->includeRoutes);
     }
 
     #[Test]
@@ -47,7 +47,7 @@ final class ManifestOptionsTest extends TestCase
             'models' => 'src/Models',
         ]);
 
-        $this->assertSame('src/Models', $options->modelsPath);
-        $this->assertSame('app/Http/Requests', $options->requestsPath);
+        self::assertSame('src/Models', $options->modelsPath);
+        self::assertSame('app/Http/Requests', $options->requestsPath);
     }
 }

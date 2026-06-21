@@ -35,7 +35,17 @@ final class ClassDiscovery
             ->sortByName();
 
         foreach ($files as $file) {
-            $code = (string) file_get_contents($file->getRealPath());
+            $path = $file->getRealPath();
+
+            if ($path === false) {
+                continue;
+            }
+
+            $code = file_get_contents($path);
+
+            if ($code === false) {
+                continue;
+            }
 
             if (preg_match('/^\s*namespace\s+([^;]+);/m', $code, $namespace) !== 1) {
                 continue;

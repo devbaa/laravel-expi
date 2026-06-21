@@ -67,7 +67,7 @@ final class GenerateLaravelJsonCommand extends Command
             return self::FAILURE;
         }
 
-        if ($this->option('stdout')) {
+        if ($this->boolOption('stdout')) {
             $this->line($json);
 
             return self::SUCCESS;
@@ -89,6 +89,15 @@ final class GenerateLaravelJsonCommand extends Command
     }
 
     /**
+     * Read a switch option as a real boolean. Console options are loosely
+     * typed, so the analyser will not accept the raw value in a condition.
+     */
+    private function boolOption(string $key): bool
+    {
+        return (bool) $this->option($key);
+    }
+
+    /**
      * @param array<string, mixed> $manifest
      *
      * @throws JsonException
@@ -97,7 +106,7 @@ final class GenerateLaravelJsonCommand extends Command
     {
         $flags = JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
 
-        if (! $this->option('minify')) {
+        if (! $this->boolOption('minify')) {
             $flags |= JSON_PRETTY_PRINT;
         }
 
@@ -106,7 +115,8 @@ final class GenerateLaravelJsonCommand extends Command
 
     private function write(string $json): int
     {
-        $target = $this->stringOption('output') ?: self::DEFAULT_OUTPUT;
+        $output = $this->stringOption('output');
+        $target = $output !== '' ? $output : self::DEFAULT_OUTPUT;
 
         $path = $this->isAbsolute($target) ? $target : base_path($target);
 
