@@ -1,0 +1,61 @@
+{
+    "name": "boralp/laravel-expi",
+    "description": "Zero-config Artisan tool that introspects a Laravel app and emits a laravel.json manifest — models, schema, relationships, validation and routes — the way OpenAPI describes an HTTP surface. Built for API, package and AI-agent scaffolding.",
+    "keywords": [
+        "laravel",
+        "artisan",
+        "manifest",
+        "introspection",
+        "openapi",
+        "ai-agent",
+        "schema",
+        "scaffolding",
+        "laravel.json"
+    ],
+    "homepage": "https://github.com/boralp/laravel-expi",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "boralp",
+            "homepage": "https://github.com/boralp"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/console": "^11.0 || ^12.0 || ^13.0",
+        "illuminate/database": "^11.0 || ^12.0 || ^13.0",
+        "illuminate/routing": "^11.0 || ^12.0 || ^13.0",
+        "illuminate/support": "^11.0 || ^12.0 || ^13.0",
+        "symfony/finder": "^7.0 || ^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0 || ^10.0 || ^11.0",
+        "phpunit/phpunit": "^10.5 || ^11.0 || ^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Boralp\\LaravelExpi\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Boralp\\LaravelExpi\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Boralp\\LaravelExpi\\LaravelExpiServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
