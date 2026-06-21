@@ -41,6 +41,27 @@ final class RouteInspector
                 'middleware' => array_values($route->gatherMiddleware()),
             ];
 
+            // Group-level context: prefix and domain come from the route group
+            // the endpoint was registered in (Route::prefix()/->domain()).
+            $prefix = $route->getPrefix();
+
+            if ($prefix !== null && $prefix !== '') {
+                $entry['prefix'] = '/' . ltrim($prefix, '/');
+            }
+
+            $domain = $route->getDomain();
+
+            if ($domain !== null && $domain !== '') {
+                $entry['domain'] = $domain;
+            }
+
+            // Parameter constraints registered with ->where()/whereNumber() etc.
+            $wheres = $route->wheres;
+
+            if ($wheres !== []) {
+                $entry['wheres'] = $wheres;
+            }
+
             $request = $this->requestForAction($action);
 
             if ($request !== null) {

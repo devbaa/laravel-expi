@@ -110,16 +110,24 @@ php artisan expi:json --minify
 
   "routes": [
     {
-      "method": ["POST"],
-      "uri": "api/users",
-      "name": "users.store",
-      "action": "App\\Http\\Controllers\\UserController@store",
-      "middleware": ["api", "auth:sanctum"],
+      "method": ["GET"],
+      "uri": "api/v1/users/{user}",
+      "name": "users.show",
+      "action": "App\\Http\\Controllers\\UserController@show",
+      "middleware": ["api", "auth:sanctum", "throttle:60,1"],
+      "prefix": "/api/v1",
+      "domain": "admin.example.com",
+      "wheres": { "user": "[0-9]+" },
       "request": "App\\Http\\Requests\\StoreUserRequest"
     }
   ]
 }
 ```
+
+`middleware` is the fully gathered list, so middleware applied to the enclosing
+group is included alongside the route's own. `prefix`, `domain` and `wheres`
+(parameter constraints from `->where()`/`whereNumber()` etc.) are emitted only
+when present.
 
 The `request` key on a route is a reference into the `requests` map, giving each
 endpoint a real, per-route validation contract.
@@ -132,7 +140,7 @@ Everything is read from the live application, which is precise but has a few hon
 - **Accessors/mutators** are detected in both the legacy `getXAttribute`/`setXAttribute` and the modern `method(): Attribute` styles.
 - **Observers** are found via the `#[ObservedBy]` attribute and by scanning the observers directory and matching the model type-hint. Observers wired up imperatively (`Model::observe(...)` in a provider, with no model type-hint) won't surface.
 - **Form Requests** are instantiated directly (never resolved through the container, which would trigger validation), and their `rules()` are normalised into string tokens. A `rules()` body that branches on request state is read with a bare GET instance and skipped if it throws.
-- **Routes** link to a Form Request by reflecting the controller action's type-hints.
+- **Routes** carry their gathered middleware (group middleware included), group `prefix`, `domain` and parameter `wheres`, and link to a Form Request by reflecting the controller action's type-hints.
 
 ## Security
 
