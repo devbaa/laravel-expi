@@ -1,5 +1,8 @@
 # laravel-expi
 
+> [!NOTE]
+> **AI-generated project.** This package — its code, tests and documentation — was written by an AI assistant (Claude). It is statically analysed (PHPStan level 10 + strict rules) and covered by an automated test suite, but please review it before relying on it in production.
+
 > Zero-config Artisan tool that introspects your Laravel app and emits a single **`laravel.json`** manifest — models, schema, relationships, validation and routes — the way OpenAPI describes an HTTP surface.
 
 `laravel-expi` reflects over your **running** application, so it never parses source code or guesses. Everything comes from the live framework: the database schema, the model instances, the validator and the route table. The result is one machine-readable document you can feed into:
